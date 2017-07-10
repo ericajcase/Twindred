@@ -1,8 +1,10 @@
 from flask import Flask
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-from app import views
+db = SQLAlchemy(app)
 
-app.config.from_object('config')
+from app import views, models

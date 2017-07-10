@@ -27,6 +27,6 @@ def index():
 def search():
     form = SearchForm()
     if form.validate_on_submit():
-        flash(form.)
-    return render_template('search.html',title = 'Search',
-    form = form)
+         flash('Searching Twitter for #%s' % (form.hashtag.data))
+         return redirect('/index')
+    return render_template('search.html',title = 'Search', form = form)
