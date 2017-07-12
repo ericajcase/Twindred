@@ -7,16 +7,6 @@ class Tweet(db.Model):
     __tablename__ = 'tweets'
 
     id = db.Column(db.Integer, primary_key=True)
-<<<<<<< Updated upstream
-    twitter_id = db.Column(db.Integer, unique=True)
-    user = db.Column(db.Integer, index=True)
-    text = db.Column(db.string(140),index=True)
-
-    def __init__(self):
-
-    def __repr__(self):
-        return '<Tweet: %r>' % (self.text)
-=======
     search_term = db.Column(db.String(139))
     twitter_id = db.Column(db.Integer, unique=True)
     latitude = db.Column(db.Float)
@@ -35,4 +25,3 @@ class Tweet(db.Model):
 
     def __repr__(self):
         return '<Tweet: {}>'.format(self.text)
->>>>>>> Stashed changes
