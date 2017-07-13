@@ -1,9 +1,14 @@
 from app import db
+import tweepy
+import jsonpickle
+
 from sqlalchemy.dialects.postgresql import JSON
+
 
 from geoalchemy2.types import Geography
 
 class Tweet(db.Model):
+    B
     __tablename__ = 'tweets'
 
     id = db.Column(db.Integer, primary_key=True)
