@@ -3,15 +3,28 @@ import jsonpickle
 import os
 
 
-class TwitterApiWrapper(object)
+class TwitterApiWrapper(object):
 
-AUTH = os.env['AUTH']
-API = tweepy.API(AUTH, wait_on_rate_limit=True,
-wait_on_rate_limit_notify=True)
+    # AUTH = os.environ['AUTH']
+    # API = tweepy.API(AUTH, wait_on_rate_limit=True,
+    # wait_on_rate_limit_notify=True)
+    TWITTER_CONSUMER_KEY = 'uguoOjKuhh4rjy7bcefxhmwFWT'
+    TWITTER_CONSUMER_SECRET =  'Y6FnSv75q5EX5x5Y7nk0Lsmimgc6b98aCMKdS7tryJJQK2rBBG'
+    # TWITTER_ACCESS_TOKEN = '830437866027180032-seKWM1Wg1cMzStZYXXy9ecyVxWPjYmK'
+    # TWITTER_ACCESS_SECRET = 'eprLYV9xGhVHp9KQrVyCRoNTJa95KzyAZVjXR1DrmLKRc
 
 
-def __initialize__(self,searchTerm):
+    # user_auth = OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+    # user_auth.set_access_token(TWITTER_ACCESS_TOKEN , TWITTER_ACCESS_SECRET)
 
+    AUTH = tweepy.AppAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+
+    API = tweepy.API(AUTH, wait_on_rate_limit=True,
+    wait_on_rate_limit_notify=True)
+
+
+    def __initialize__(self):
+        pass
 
     def all (self, searchTerm, bigSearch = False, sinceID = None, max_id = -1):
         if(not self.API):
@@ -26,6 +39,7 @@ def __initialize__(self,searchTerm):
         tweetsPerQry = 100 # max permitted by Twitter
 
         while len(tweets) < maxTweets:
+            print(self.API)
             try:
                 new_tweets = self.API.search(q=searchQuery, count=tweetsPerQry,since_id = sinceID,  max_id=str(max_id - 1))
                 tweetCount += len(new_tweets)

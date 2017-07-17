@@ -1,17 +1,16 @@
 from app import db
 import tweepy
+from tweepy import OAuthHandler
 import jsonpickle
+import os
+
+
 
 from sqlalchemy.dialects.postgresql import JSON
-
 from geoalchemy2.types import Geography
 
-class Tweet(db.Model)
-
-AUTH = os.env['AUTH']
-API = tweepy.API(AUTH, wait_on_rate_limit=True,
-wait_on_rate_limit_notify=True)
-    AUTH = os.env['AUTH']
+class Tweet(db.Model):
+    AUTH = os.environ['AUTH']
     API = tweepy.API(AUTH, wait_on_rate_limit=True,
     wait_on_rate_limit_notify=True)
 

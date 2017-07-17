@@ -1,12 +1,13 @@
 from flask import render_template, flash, redirect
-from app import app
+from app import app, db
 from .forms import SearchForm
-
+from .tweet import Tweet
+from .twitter_api_wrapper import TwitterApiWrapper
 
 @app.route('/')
 @app.route('/index')
 
-def index():
+def index(hashtag):
     user = {'nickname': 'Miguel'}  # fake user
     posts = [  # fake array of posts
     {
@@ -28,5 +29,12 @@ def search():
     form = SearchForm()
     if form.validate_on_submit():
          flash('Searching Twitter for #%s' % (form.hashtag.data))
-         return redirect('/index')
+         return search_results(hashtag = form.hashtag.data)
     return render_template('search.html',title = 'Search', form = form)
+
+def search_results(hashtag):
+        twit_search = TwitterApiWrapper()
+        results = twit_search.all(hashtag, bigSearch = False)
+        hashtag = "test"
+
+        return render_template('index.html', hashtag = "test")
