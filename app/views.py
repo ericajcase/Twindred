@@ -35,6 +35,8 @@ def search():
 def search_results(hashtag):
         twit_search = TwitterApiWrapper()
         results = twit_search.all(hashtag, bigSearch = False)
-        hashtag = "test"
 
+        
+
+        for results
         return render_template('index.html', hashtag = "test")

@@ -2,8 +2,10 @@
 {% block content %}
   {% if (hashtag != ""): %}
     <h1>Hi, {{hashtag}}!</h1>
+  {% endif %}
   {% for post in posts %}
-    <div><p>{{ post.author.nickname }} says:    <b>{{ post.body }}</b>
-    </p></div>
-{% endfor %}
+      <div><p>{{ post.author.nickname }} says:
+        <b>{{ post.body }}</b>
+      </p></div>
+    {% endfor %}
 {% endblock %}
