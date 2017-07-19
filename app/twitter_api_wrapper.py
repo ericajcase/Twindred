@@ -1,13 +1,12 @@
 import tweepy
+from tweepy import OAuthHandler
 import jsonpickle
 import os
 
-
 class TwitterApiWrapper(object):
+    AUTH = tweepy.AppAuthHandler(os.environ['TWITTER_CONSUMER_KEY'], os.environ['TWITTER_CONSUMER_SECRET'])
 
-    AUTH = os.environ['AUTH']
-    API = tweepy.API(AUTH, wait_on_rate_limit=True,
-    wait_on_rate_limit_notify=True)
+    API = tweepy.API(AUTH, wait_on_rate_limit=True,     wait_on_rate_limit_notify=True)
 
     def __initialize__(self):
         pass
@@ -20,13 +19,14 @@ class TwitterApiWrapper(object):
         if bigSearch == True:
             maxTweets = 1000
         else:
-             maxTweets = 100
+             maxTweets = 10
         searchQuery = searchTerm  #search def
         tweetsPerQry = 100 # max permitted by Twitter
         tweetCount = 0
 
         while (len(tweets) < maxTweets):
             try:
+                print (self.API)
                 new_tweets = self.API.search(q=searchQuery, count=tweetsPerQry,since_id = sinceID,  max_id=str(max_id - 1))
                 if (len(new_tweets) > 0 ):
                     print("Downloaded {0} tweets".format(len(new_tweets)))

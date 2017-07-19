@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect
 from app import app, db
 from .forms import SearchForm
-from .tweet import Tweet
+from .tweet_collection import TweetCollection
 from .twitter_api_wrapper import TwitterApiWrapper
 
 @app.route('/')
@@ -36,7 +36,7 @@ def search_results(hashtag):
         twit_search = TwitterApiWrapper()
         results = twit_search.all(hashtag, bigSearch = False)
 
+        tweets = TweetCollection(results,hashtag)
         
 
-        for results
-        return render_template('index.html', hashtag = "test")
+        return render_template('index.html', hashtag = tweets.tweetList[0])
