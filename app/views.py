@@ -4,6 +4,10 @@ from .forms import SearchForm
 from .tweet_collection import TweetCollection
 # from .tweet import Tweet
 
+# the polarity value between 0 and 1 that represents "positive sentiment"
+
+POSITIVE = 0.5
+
 @app.route('/')
 @app.route('/index')
 
@@ -35,4 +39,11 @@ def search():
 def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 
-    return render_template('search_results.html', hashtag = hashtag, tweetList = tweets)
+    displayStats = {
+        hashtag: hashtag,
+        num: len(tweets.tweetList),
+        positive: tweets.of_sentiment(POSITIVE)
+        negative: tweets.of_sentiment(-POSITIVE)
+        }
+
+    return render_template('search_results.html', ), displayStats)

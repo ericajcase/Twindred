@@ -26,7 +26,10 @@ def upgrade():
     sa.Column('text', sa.String(length=160), nullable=True),
     sa.Column('user', sa.BigInteger(), nullable=True),
     sa.Column('date', sa.DateTime(), nullable=True),
-    sa.Column('location', Geography(geometry_type='POINT', srid=4326), nullable=True),
+    sa.Column('coordinates', Geography(geometry_type='POINT', srid=4326), nullable=True),
+    sa.Column('location', sa.String),
+    sa.Column('polarity', sa.Float),
+    sa.Column('subjectivity', sa.Float),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('twitter_id')
     )
