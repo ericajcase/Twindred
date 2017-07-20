@@ -3,18 +3,32 @@ from .tweet import Tweet
 from sqlalchemy.exc import IntegrityError
 
 class TweetCollection(object):
-    def __init__(self, results,search_term):
-        self.tweetList  = []
-        self.make_tweetList(results, search_term)
+    def __init__(self, search_term):
+        self.hashtag = search_term
 
-    def make_tweetList(self, results,search_term):
+        self.tweetList  = list(Tweet.query.filter_by(search_term = self.hashtag).all())
+
+        self.updateTweetList(self.searchTwitter())
+
+    def searchTwitter():
+        if len(self.tweetList) > 0:
+            sinceId = Tweet.query.filter_by(search_term = self.hashtag)
+        else:
+            sinceId = None
+
+        twit_search = TwitterApiWrapper()
+        results = twit_search.all(hashtag, bigSearch = False, sinceID = sinceId)
+
+        return (results)
+
+    def __updateTweetList__(results):
         for result in results:
-            tweetsAdded = 0
+            unsaved = 0
             tweet = Tweet(result, search_term)
             db.session.add(tweet)
-
             try:
                 db.session.commit()
                 self.tweetList.append(tweet)
             except IntegrityError:
                 db.session().rollback()
+                unsaved += 1

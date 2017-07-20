@@ -23,14 +23,16 @@ class TwitterApiWrapper(object):
         searchQuery = searchTerm  #search def
         tweetsPerQry = 100 # max permitted by Twitter
         tweetCount = 0
-
-        while (len(tweets) < maxTweets):
+        fails = 0
+        while ((len(tweets) < maxTweets) and fails < 10):
             try:
                 print (self.API)
                 new_tweets = self.API.search(q=searchQuery, count=tweetsPerQry,since_id = sinceID,  max_id=str(max_id - 1))
                 if (len(new_tweets) > 0 ):
                     print("Downloaded {0} tweets".format(len(new_tweets)))
                     max_id = new_tweets[-1].id
+                else:
+                    fails += 1
                 tweets += new_tweets
             except tweepy.TweepError as e:
                 # Just exit if any error

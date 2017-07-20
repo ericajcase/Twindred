@@ -28,7 +28,6 @@ class Tweet(db.Model):
         # self.location = coordinates Geography(geometry_type='POINT', srid=4326, spatial_index=True)
 
         # self.update_location(lon,lat)
-    
     def __repr__(self):
         return '<Tweet: {}>'.format(self.text)
 
