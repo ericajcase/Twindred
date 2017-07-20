@@ -4,13 +4,12 @@ from sqlalchemy.exc import IntegrityError
 from .twitter_api_wrapper import TwitterApiWrapper
 
 class TweetCollection(object):
-    def __init__(self, search_term, api = True):
+    def __init__(self, search_term):
         self.hashtag = search_term
 
         self.tweetList  = list(Tweet.query.filter_by(search_term = self.hashtag).all())
 
-        if api:
-            self.updateTweetList(self.searchTwitter())
+        self.updateTweetList(self.searchTwitter())
 
     def searchTwitter(self):
         if len(self.tweetList) > 0:
@@ -35,4 +34,14 @@ class TweetCollection(object):
                 db.session().rollback()
                 unsaved += 1
 
-    def
+
+    def by_sentiment(self, polarity):
+        return {
+            "num_pos": len([tweet for tweet in self.tweetList if tweet.polarity > polarity]),
+
+            "num_neg": len([ tweet for tweet in self.tweetList if tweet.polarity < -(polarity)]),
+
+            "most_pos": list(Tweet.query.filter_by(search_term = self.hashtag).order_by(Tweet.polarity).limit(10).all()),
+
+            "most_neg": list(Tweet.query.filter_by(search_term = self.hashtag).order_by(Tweet.polarity.desc()).limit(10).all())
+            }

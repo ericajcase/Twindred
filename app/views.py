@@ -6,7 +6,7 @@ from .tweet_collection import TweetCollection
 
 # the polarity value between 0 and 1 that represents "positive sentiment"
 
-POSITIVE = 0.5
+POSITIVE = .5
 
 @app.route('/')
 @app.route('/index')
@@ -40,10 +40,9 @@ def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 
     displayStats = {
-        hashtag: hashtag,
-        num: len(tweets.tweetList),
-        positive: tweets.of_sentiment(POSITIVE)
-        negative: tweets.of_sentiment(-POSITIVE)
+        "hashtag": hashtag,
+        "num": len(tweets.tweetList),
+        "sentimentStats": tweets.by_sentiment(POSITIVE)
         }
 
-    return render_template('search_results.html', ), displayStats)
+    return render_template('search_results.html', hashtag = displayStats["sentimentStats"])

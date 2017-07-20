@@ -1,8 +1,10 @@
 from app import db
+import re
 import tweepy
 from tweepy import OAuthHandler
 import jsonpickle
 import os
+from textblob import TextBlob
 
 from sqlalchemy.dialects.postgresql import JSON
 from geoalchemy2.types import Geography
@@ -27,20 +29,21 @@ class Tweet(db.Model):
         self.text = tweetData.text
         self.date = tweetData.created_at
         self.search_term = search_term
-        self.coordinates = tweetData.coordinates
-        self.location = tweetData.user.location
+        self.coordinates = None
+        print (tweetData.coordinates)
+        self.location = None
 
         self.polarity = 0
         self.subjectivity = 0
-        self.get_tweet_sentiment
-        # self.location = coordinates Geography(geometry_type='POINT', srid=4326, spatial_index=True)
+        self.get_tweet_sentiment()
+        # self.update_coordinates(tweetData.coordinates)
 
-        # self.update_location(lon,lat)
+
     def __repr__(self):
         return '<Tweet: {}>'.format(self.text)
 
-    def __update_location__(self,lon,lat):
-        self.location = "SRID=4326;POINT(%0.8f %0.8f)" % (lon, lat)
+    def update_coordinates(self,coords):
+        self.location = "SRID=4326;POINT(%0.8f %0.8f)" % coords
 
     def clean_tweet(self, tweet):
         '''
@@ -55,8 +58,7 @@ class Tweet(db.Model):
         using textblob's sentiment method
         '''
         # create TextBlob object of passed tweet text
-        sentiment = TextBlob(self.clean_tweet(self.tweet.text)).sentiment
+        sentiment = TextBlob(self.clean_tweet(self.text)).sentiment
 
         self.polarity = sentiment.polarity
         self.subjectivity = sentiment.subjectivity
-        return
