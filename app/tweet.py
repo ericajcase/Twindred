@@ -30,20 +30,21 @@ class Tweet(db.Model):
         self.date = tweetData.created_at
         self.search_term = search_term
         self.coordinates = None
-        print (tweetData.coordinates)
         self.location = None
 
         self.polarity = 0
         self.subjectivity = 0
         self.get_tweet_sentiment()
-        # self.update_coordinates(tweetData.coordinates)
+
+        if tweetData.coordinates != None:
+            self.update_coordinates(tweetData.coordinates['coordinates'])
 
 
     def __repr__(self):
         return '<Tweet: {}>'.format(self.text)
 
     def update_coordinates(self,coords):
-        self.location = "SRID=4326;POINT(%0.8f %0.8f)" % coords
+        self.location = "SRID=4326;POINT(%0.8f %0.8f)" % (coords[0], coords[1])
 
     def clean_tweet(self, tweet):
         '''

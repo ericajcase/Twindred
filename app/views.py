@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect
 from app import app, db
-from .forms import SearchForm
+from .forms import SearchForm, SimpleForm
 from .tweet_collection import TweetCollection
 # from .tweet import Tweet
 
@@ -45,4 +45,13 @@ def search_results(hashtag):
         "sentimentStats": tweets.by_sentiment(POSITIVE)
         }
 
-    return render_template('search_results.html', hashtag = displayStats["sentimentStats"])
+    return render_template('search_results.html', title = 'Search', displayStats = displayStats)
+
+@app.route('/test')
+def test(info):
+    form = SimpleForm()
+
+    if form.validate_on_submit():
+         return search_results(hashtag = form.hashtag.data)
+
+    return (render_template('search.html',form=form))

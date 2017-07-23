@@ -1,4 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Results for {{hashtag}}</h1>
+<h1>{{displayStats.num}} tweets for  {{displayStats.hashtag}} </h1>
+<h2>Positive: {{'%0.1f'| format(displayStats.sentimentStats.num_pos/displayStats.num * 100|float)}}%</h2>
+<ul>
+  {% for pos in displayStats.sentimentStats.most_pos %}
+  <li>{{pos.text}}</li>
+  {% endfor %}
+</ul>
+
+<h2>Negative: {{'%0.1f'| format(displayStats.sentimentStats.num_neg/displayStats.num * 100|float)}}%</h2>
+<ul>
+  {% for neg in displayStats.sentimentStats.most_neg %}
+  <li>{{neg.text}}</li>
+  {% endfor %}
+</ul>
+
+
+<ul>
+  {% for neg in displayStats.sentimentStats.most_neg %}
+  <li>
+    <input type="checkbox" id="{{neg.twitter_id}}" name="tweets" value="{{neg.text}}">
+    <label for="neg.twitter_id">{{neg.text}}</label>
+  </li>
+  {% endfor %}
+</ul>
+
+
 {% endblock %}

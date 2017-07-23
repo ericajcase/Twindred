@@ -31,7 +31,8 @@ def upgrade():
     sa.Column('polarity', sa.Float),
     sa.Column('subjectivity', sa.Float),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('twitter_id')
+    sa.UniqueConstraint('twitter_id'),
+    sa.UniqueConstraint('text')
     )
     op.create_index(op.f('ix_tweets_text'), 'tweets', ['text'], unique=False)
     op.create_index(op.f('ix_tweets_user'), 'tweets', ['user'], unique=False)
