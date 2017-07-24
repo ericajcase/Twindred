@@ -51,7 +51,7 @@ def search_results(hashtag):
 
     posTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
 
-    negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
+    negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_neg"]]
 
     print(negTweets)
 
