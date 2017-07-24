@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, request
-from app import app, db
+from app import application, db
 from .forms import SearchForm, SimpleForm
 from .tweet_collection import TweetCollection
 # from .tweet import Tweet
