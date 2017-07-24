@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, request
 from app import app, db
 from .forms import SearchForm, SimpleForm
 from .tweet_collection import TweetCollection
@@ -39,6 +39,8 @@ def search():
 def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 
+    form = SimpleForm()
+
 
     displayStats = {
         "hashtag": hashtag,
@@ -46,13 +48,24 @@ def search_results(hashtag):
         "sentimentStats": tweets.by_sentiment(POSITIVE)
         }
 
-    return render_template('search_results.html', title = 'Search', displayStats = displayStats)
 
-@app.route('/test')
-def test(info):
-    form = SimpleForm()
+    posTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
 
-    if form.validate_on_submit():
-         return search_results(hashtag = form.hashtag.data)
+    negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
 
-    return (render_template('search.html',form=form))
+    print(negTweets)
+
+    form.pos.choices = posTweets
+    form.neg.choices = negTweets
+
+    return render_template('search_results.html', title = 'Search', displayStats = displayStats, form = form)
+
+# @app.route('/test')
+# def test(info = ""):
+#     form = SimpleForm(request.form)
+#     form.example.choices
+#
+#     # if form.validate_on_submit():
+#     #      return search_results(hashtag = form.hashtag.data)
+#
+#     return (render_template('test.html',form=form))
