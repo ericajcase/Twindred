@@ -8,7 +8,6 @@ from .tweet_collection import TweetCollection
 
 POSITIVE = .5
 
-@app.route('/')
 @app.route('/index')
 
 def index(hashtag):
@@ -28,6 +27,7 @@ def index(hashtag):
     user=user,
     posts = posts)
 
+@app.route('/')
 @app.route('/search', methods=['GET','POST'])
 def search():
     form = SearchForm()

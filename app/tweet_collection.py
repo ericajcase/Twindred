@@ -13,7 +13,7 @@ class TweetCollection(object):
 
     def searchTwitter(self):
         if len(self.tweetList) > 0:
-            sinceId = Tweet.query.filter_by(search_term = self.hashtag)
+            sinceId = Tweet.query.filter_by(search_term = self.hashtag, bigSearch = True)
         else:
             sinceId = None
 
