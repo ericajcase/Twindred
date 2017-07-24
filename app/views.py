@@ -39,6 +39,7 @@ def search():
 def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 
+
     displayStats = {
         "hashtag": hashtag,
         "num": len(tweets.tweetList),

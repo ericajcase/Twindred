@@ -13,7 +13,7 @@ class TweetCollection(object):
 
     def searchTwitter(self):
         if len(self.tweetList) > 0:
-            sinceId = Tweet.query.filter_by(search_term = self.hashtag, bigSearch = True)
+            sinceId = Tweet.query.filter_by(search_term = self.hashtag)
         else:
             sinceId = None
 
@@ -36,12 +36,17 @@ class TweetCollection(object):
 
 
     def by_sentiment(self, polarity):
+
+        pos = [tweet for tweet in self.tweetList if tweet.polarity > polarity]
+
+        neg = [ tweet for tweet in self.tweetList if tweet.polarity < -(polarity) and tweet.subjectivity > 0.5]
+
         return {
-            "num_pos": len([tweet for tweet in self.tweetList if tweet.polarity > polarity]),
+            "num_pos": len(pos),
 
-            "num_neg": len([ tweet for tweet in self.tweetList if tweet.polarity < -(polarity)]),
+            "num_neg": len(neg),
 
-            "most_pos": list(Tweet.query.filter_by(search_term = self.hashtag).order_by(Tweet.polarity).limit(10).all()),
+            "most_pos": list(Tweet.query.filter_by(search_term = self.hashtag).filter(Tweet.subjectivity > 0.5).order_by(Tweet.polarity.desc()).limit(10).all()),
 
-            "most_neg": list(Tweet.query.filter_by(search_term = self.hashtag).order_by(Tweet.polarity.desc()).limit(10).all())
+            "most_neg": list(Tweet.query.filter_by(search_term = self.hashtag).filter(Tweet.subjectivity > 0.5).order_by(Tweet.polarity).limit(10).all())
             }
