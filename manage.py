@@ -2,6 +2,8 @@ import os
 from flask_script  import Manager
 from flask_migrate import Migrate, MigrateCommand
 
+#!../flask/bin/python3
+
 from application import application, db
 
 application.config.from_object('config')

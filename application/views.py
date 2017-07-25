@@ -49,24 +49,41 @@ def search_results(hashtag):
         "sentimentStats": tweets.by_sentiment(POSITIVE)
         }
 
+    posTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
+
+    negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_neg"]]
+
+    form.pos.choices = posTweets
+    form.neg.choices = negTweets
+
+    render_template('search_results.html', title = 'Search', displayStats = displayStats, form = form)
+
+    if form.validate_on_submit():
+        return render_template('search.html',title = 'Search', form = form)
+    return render_template('search.html',title = 'Search', form = form)
+
+
+
+
+@application.route('/test', methods=['GET','POST'])
+def test(hashtag):
+    tweets = TweetCollection(hashtag)
+
+    form = SimpleForm()
+
+
+    displayStats = {
+        "hashtag": hashtag,
+        "num": len(tweets.tweetList),
+        "sentimentStats": tweets.by_sentiment(POSITIVE)
+        }
+
 
     posTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
 
     negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_neg"]]
 
-    print(negTweets)
-
     form.pos.choices = posTweets
     form.neg.choices = negTweets
 
     return render_template('search_results.html', title = 'Search', displayStats = displayStats, form = form)
-
-# @app.route('/test')
-# def test(info = ""):
-#     form = SimpleForm(request.form)
-#     form.example.choices
-#
-#     # if form.validate_on_submit():
-#     #      return search_results(hashtag = form.hashtag.data)
-#
-#     return (render_template('test.html',form=form))
