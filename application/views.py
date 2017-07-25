@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, request
-from app import app, db
+from application import application, db
 from .forms import SearchForm, SimpleForm
 from .tweet_collection import TweetCollection
 # from .tweet import Tweet
@@ -8,7 +8,7 @@ from .tweet_collection import TweetCollection
 
 POSITIVE = .5
 
-@app.route('/index')
+@application.route('/index')
 
 def index(hashtag):
     user = {'nickname': 'Miguel'}  # fake user
@@ -27,8 +27,8 @@ def index(hashtag):
     user=user,
     posts = posts)
 
-@app.route('/')
-@app.route('/search', methods=['GET','POST'])
+@application.route('/')
+@application.route('/search', methods=['GET','POST'])
 def search():
     form = SearchForm()
     if form.validate_on_submit():
@@ -36,6 +36,7 @@ def search():
          return search_results(hashtag = form.hashtag.data)
     return render_template('search.html',title = 'Search', form = form)
 
+@application.route('/search_results', methods=['GET','POST'])
 def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 

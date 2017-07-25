@@ -1,4 +1,4 @@
-from app import db
+from application import db
 from .tweet import Tweet
 from sqlalchemy.exc import IntegrityError
 from .twitter_api_wrapper import TwitterApiWrapper
