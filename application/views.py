@@ -36,6 +36,7 @@ def search():
          return search_results(hashtag = form.hashtag.data)
     return render_template('search.html',title = 'Search', form = form)
 
+@application.route('/search_results', methods=['GET','POST'])
 def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 
