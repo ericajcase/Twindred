@@ -1,4 +1,4 @@
-from app import db
+from application import db
 import re
 import tweepy
 from tweepy import OAuthHandler
