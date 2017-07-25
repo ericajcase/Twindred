@@ -27,7 +27,7 @@ def index(hashtag):
     user=user,
     posts = posts)
 
-@application.route('/')
+@application.route('/', methods=['GET','POST'])
 @application.route('/search', methods=['GET','POST'])
 def search():
     form = SearchForm()
@@ -35,12 +35,12 @@ def search():
          flash('Searching Twitter for #%s' % (form.hashtag.data))
          return search_results(hashtag = form.hashtag.data)
     return render_template('search.html',title = 'Search', form = form)
-
+@application.route('/', methods = ['GET','POST'])
 @application.route('/search_results', methods=['GET','POST'])
 def search_results(hashtag):
     tweets = TweetCollection(hashtag)
 
-    form = SimpleForm()
+    form = SimpleForm(request.form)
 
 
     displayStats = {
@@ -53,37 +53,19 @@ def search_results(hashtag):
 
     negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_neg"]]
 
+    form.displayStats = displayStats
     form.pos.choices = posTweets
     form.neg.choices = negTweets
+    return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = form)
 
-    render_template('search_results.html', title = 'Search', displayStats = displayStats, form = form)
+    # if form.validate_on_submit():
+    #     return render_template('search.html',title = 'Search', form = form)
+    # return render_template('search_results.html', title = 'Search', displayStats = displayStats, form = form)
 
-    if form.validate_on_submit():
-        return render_template('search.html',title = 'Search', form = form)
-    return render_template('search.html',title = 'Search', form = form)
+@application.route('/like_minds', methods=['GET','POST'])
+def like_minds():
+    good_tweets = request.form.getlist('pos',       type=int)
 
+    hashtags = Tweet.query.filter_by(search_term = self.hashtag).
 
-
-
-@application.route('/test', methods=['GET','POST'])
-def test(hashtag):
-    tweets = TweetCollection(hashtag)
-
-    form = SimpleForm()
-
-
-    displayStats = {
-        "hashtag": hashtag,
-        "num": len(tweets.tweetList),
-        "sentimentStats": tweets.by_sentiment(POSITIVE)
-        }
-
-
-    posTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_pos"]]
-
-    negTweets = [(x.twitter_id, x.text) for x in displayStats["sentimentStats"]["most_neg"]]
-
-    form.pos.choices = posTweets
-    form.neg.choices = negTweets
-
-    return render_template('search_results.html', title = 'Search', displayStats = displayStats, form = form)
+    return render_template('like_minds.html', test = good_tweets)

@@ -53,6 +53,9 @@ class Tweet(db.Model):
         '''
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
+    def get_hashtags(self):
+        return (re.findall("\S*#(?:\[[^\]]+\]|\S+)", self.text))
+
     def get_tweet_sentiment(self):
         '''
         Utility function to classify sentiment of passed tweet

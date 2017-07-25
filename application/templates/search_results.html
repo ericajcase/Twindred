@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{displayStats.num}} tweets for  {{displayStats.hashtag}} </h1>
+<!-- <h1>{{displayStats.num}} tweets for  {{displayStats.hashtag}} </h1>
 
-<h2>Positive: {{'%0.1f'| format(displayStats.sentimentStats.num_pos/displayStats.num * 100|float)}}%</h2>
+<h2>Positive: {{'%0.1f'| format(displayStats.sentimentStats.num_pos/displayStats.num * 100|float)}}%</h2> -->
+<form action="/like_minds" method="post" name="Selected">
+
 <ul><li> {{form.pos}}</li></ul>
 
-<h2>Negative: {{'%0.1f'| format(displayStats.sentimentStats.num_neg/displayStats.num * 100|float)}}%</h2>
-<ul><li> {{form.neg}}</li></ul>
+<!-- <h2>Negative: {{'%0.1f'| format(displayStats.sentimentStats.num_neg/displayStats.num * 100|float)}}%</h2> -->
 
 <p><input type="submit" value="Choose Tweets"></p>
 
