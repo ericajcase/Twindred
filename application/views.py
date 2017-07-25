@@ -66,6 +66,8 @@ def search_results(hashtag):
 def like_minds():
     good_tweets = request.form.getlist('pos',       type=int)
 
-    hashtags = Tweet.query.filter_by(search_term = self.hashtag).
+
+
+
 
     return render_template('like_minds.html', test = good_tweets)
