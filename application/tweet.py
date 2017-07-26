@@ -16,12 +16,13 @@ class Tweet(db.Model):
     search_term = db.Column(db.String(500))
     twitter_id = db.Column(db.BigInteger, unique=True)
     text = db.Column(db.String(140),index=True)
-    user = db.Column(db.BigInteger, index=True)
+    user_name = db.Column(db.BigInteger, index=True)
     date = db.Column(db.DateTime)
     coordinates = db.Column(Geography(geometry_type='POINT', srid=4326, spatial_index=True))
     location = db.Column(db.String(160))
     polarity = db.Column(db.Float)
     subjectivity = db.Column(db.Float)
+
 
     def __init__(self, tweetData, search_term):
         self.twitter_id = tweetData.id
@@ -31,8 +32,8 @@ class Tweet(db.Model):
         self.search_term = search_term
         self.coordinates = None
         self.location = tweetData.user.location
-        self.location = tweetData.user.name
-
+        self.user_name = tweetData.user.screen_name
+#
         self.polarity = 0
         self.subjectivity = 0
         self.get_tweet_sentiment()
@@ -53,8 +54,6 @@ class Tweet(db.Model):
         using simple regex statements.
         '''
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
-
-
 
     def get_tweet_sentiment(self):
         '''

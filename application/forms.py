@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, validators, widgets, SelectMultipleField
+from wtforms import StringField, BooleanField, HiddenField, validators, widgets, SelectMultipleField
 from wtforms.validators import DataRequired
+
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
@@ -15,3 +16,6 @@ class SearchForm(FlaskForm):
 class SimpleForm(FlaskForm):
     pos = MultiCheckboxField('Label', choices=[])
     neg = MultiCheckboxField('Label', choices=[])
+
+class AutoSearch(FlaskForm):
+    hashtag = HiddenField('hashtag')

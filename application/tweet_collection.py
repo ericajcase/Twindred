@@ -1,15 +1,19 @@
 from application import db
+from collections import Counter
 from .tweet import Tweet
 from sqlalchemy.exc import IntegrityError
 from .twitter_api_wrapper import TwitterApiWrapper
 
 class TweetCollection(object):
-    def __init__(self, search_term):
+    def __init__(self, search_term = None, tweets = None):
         self.hashtag = search_term
+        self.tweetList  = tweets
 
-        self.tweetList  = list(Tweet.query.filter_by(search_term = self.hashtag).all())
+        if self.tweetList == None:
+            self.tweetList = list(Tweet.query.filter_by(search_term = self.hashtag).all())
 
-        self.updateTweetList(self.searchTwitter())
+        if search_term:
+            self.updateTweetList(self.searchTwitter())
 
     def searchTwitter(self):
         if len(self.tweetList) > 0:
@@ -22,7 +26,7 @@ class TweetCollection(object):
 
         return (results)
 
-    def updateTweetList(self,results, new = True):
+    def updateTweetList(self,results):
         for result in results:
             unsaved = 0
             tweet = Tweet(result, self.hashtag)
@@ -49,4 +53,3 @@ class TweetCollection(object):
 
             "most_neg": list(Tweet.query.filter_by(search_term = self.hashtag).filter(Tweet.subjectivity > 0.5).order_by(Tweet.polarity).limit(10).all())
             }
-    

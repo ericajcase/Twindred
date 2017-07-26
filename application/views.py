@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request
 from application import application, db
-from .forms import SearchForm, SimpleForm
+from .forms import SearchForm, SimpleForm, AutoSearch
 from .tweet_collection import TweetCollection
 import logging
 from logging.handlers import RotatingFileHandler
@@ -37,9 +37,12 @@ def search():
          flash('Searching Twitter for #%s' % (form.hashtag.data))
          return search_results(hashtag = form.hashtag.data)
     return render_template('search.html',title = 'Search', form = form)
+
 @application.route('/', methods = ['GET','POST'])
 @application.route('/search_results', methods=['GET','POST'])
-def search_results(hashtag):
+def search_results(hashtag = None ):
+    if hashtag == None:
+        hashtag = request.form.get("hashtag")
     tweets = TweetCollection(hashtag)
 
     form = SimpleForm(request.form)
@@ -68,9 +71,9 @@ def search_results(hashtag):
 def like_minds():
     tweet_ids = request.form.getlist('pos', type=int)
 
-    tweets = Tweet.query.filter(Tweet.twitter_id.in_(tweet_ids)).all()
+    form = AutoSearch(request.form)
 
-    print(tweets)
+    tweets = (Tweet.query.filter(Tweet.twitter_id.in_(tweet_ids)).all())
 
     hashtags = []
     locations = []
@@ -79,4 +82,4 @@ def like_minds():
         hashtags = hashtags + tweet.get_hashtags()
         locations.append(tweet.location)
 
-    return render_template('like_minds.html', test = hashtags, test2 = locations)
+    return render_template('like_minds.html', hashtags = hashtags, locations = locations, form = form, hashtag = tweets[0].search_term)
