@@ -1,12 +1,18 @@
-<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="../static/stylesheets/normalize.css" rel="stylesheet" type= "text/css">
 
-<html>
-<title>TODO supply a title</title>
-      <meta charset="UTF-8">
-      <script type="text/javascript", src= "{{url_for('static', filename='js/bower_components/d3/d3.js')}}"></script>
+  <link href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" type= "text/css">
 
-      <script type="text/javascript" src= "{{url_for('static', filename='js/bower_components/d3-cloud/d3.layout.cloud.js')}}" ></script>
-      <script type="text/javascript", src='static/js/tags.js'></script>
+  <script type="text/javascript", src= "{{url_for('static', filename='js/bower_components/d3/d3.js')}}"></script>
+
+  <script type="text/javascript" src= "{{url_for('static', filename='js/bower_components/d3-cloud/d3.layout.cloud.js')}}" ></script>
+  <script type="text/javascript", src='static/js/tags.js'></script>
+</head>
+<title>Twindred</title>
+
 <body>
   {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -18,9 +24,10 @@
   {% endif %}
   {% endwith %}
 
-  <div>Twindred: <a href="/index">Home</a></div>
+  <div class="twin">Twindred: <a href="/search">Home</a></div>
   <hr>
   {% block content %}{% endblock %}
+
         <div id="vis"></div>
         <script type="text/javascript" src="word-cloud.js"></script>
 </body>

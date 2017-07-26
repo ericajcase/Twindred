@@ -6,6 +6,7 @@ import os
 application = Flask(__name__)
 application.config.from_object('config')
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+application.static_folder = 'static'
 
 # load dotenv in the base root
 APP_ROOT = os.path.join(os.path.dirname(__file__), '..')   # refers to application_top

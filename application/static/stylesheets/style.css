@@ -1,14 +1,77 @@
-ul { list-style: none; }
 
+/********************************************/
+/**************ALL PAGES**********************/
+/********************************************/
 body {
-  position: relative;
-  display: inline-block;
+  justify-content: center;
+  vertical-align: center;
+  color: white;
   background-image:    url('../assets/Network.jpg');
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center;
+  background-attachment: fixed;
   width: 100%;
   height: 30em;
   z-index: 0;
-  top: 5.5em;
+  top: 10em;
+  font-size: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+ul{
+
+  list-style: none;
+  padding: 5px;
+  text-align:left;
+}
+
+li{
+  padding: 6px;
+}
+/********************************************************/
+/*SEARCH PAGE*/
+/*********************************************************/
+.search, #search_results{
+  display: inline-block;
+  background-color: #6acef6;
+  /*background-color: grey;*/
+  text-align: center;
+  border-width: : 2px;
+  border-color: #121e46;
+  color: #121e46;
+  border-style: solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  width:60%;
+  }
+
+.search, .search p {
+  font-size: 20px;
+}
+  p.bar{
+    font-size: 30px;
+  }
+
+  p.bar input{
+    font-size:30px;
+    border-width: 2px;
+    padding: 5px;
+    border-color: #29708e;
+    color: #29708e;
+  }
+
+  /********************************************************/
+  /*SEARCH RESULTS*/
+  /*********************************************************/
+
+
+#search_results {
+  margin-top: 45%;
 }

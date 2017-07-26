@@ -2,14 +2,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Please describe yourself in a hash tag</h1>
-  <!-- <h2>Be sure to pick something you are passionate about</h2> -->
-  <form action="" method="post" name="Search">
+  <div class = "search">
+    <h1>Please describe yourself in a hash tag</h1>
+    <!-- <h2>Be sure to pick something you are passionate about</h2> -->
+    <form action="" method="post" name="Search">
 
-      {{ form.hidden_tag() }}
-      <p>
-          #: {{ form.hashtag(size=80) }}<br>
-      </p>
-      <p><input type="submit" value="Search"></p>
-  </form>
+        {{ form.hidden_tag() }}
+        <p class = "bar">
+            #: {{ form.hashtag(size=30) }}
+        </p>
+        <p><input type="submit" value="Search"></p>
+    </form>
+  </div>
+
 {% endblock %}
