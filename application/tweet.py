@@ -19,7 +19,7 @@ class Tweet(db.Model):
     user = db.Column(db.BigInteger, index=True)
     date = db.Column(db.DateTime)
     coordinates = db.Column(Geography(geometry_type='POINT', srid=4326, spatial_index=True))
-    location = db.column(db.String)
+    location = db.Column(db.String(160))
     polarity = db.Column(db.Float)
     subjectivity = db.Column(db.Float)
 
@@ -30,7 +30,7 @@ class Tweet(db.Model):
         self.date = tweetData.created_at
         self.search_term = search_term
         self.coordinates = None
-        self.location = None
+        self.location = tweetData.text
 
         self.polarity = 0
         self.subjectivity = 0
@@ -53,8 +53,7 @@ class Tweet(db.Model):
         '''
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
-    def get_hashtags(self):
-        return (re.findall("\S*#(?:\[[^\]]+\]|\S+)", self.text))
+
 
     def get_tweet_sentiment(self):
         '''
@@ -66,3 +65,6 @@ class Tweet(db.Model):
 
         self.polarity = sentiment.polarity
         self.subjectivity = sentiment.subjectivity
+
+    def get_hashtags(self):
+        return (re.findall("\S*#(?:\[[^\]]+\]|\S+)", self.text))

@@ -2,7 +2,9 @@ from flask import render_template, flash, redirect, request
 from application import application, db
 from .forms import SearchForm, SimpleForm
 from .tweet_collection import TweetCollection
-# from .tweet import Tweet
+import logging
+from logging.handlers import RotatingFileHandler
+from .tweet import Tweet
 
 # the polarity value between 0 and 1 that represents "positive sentiment"
 
@@ -27,7 +29,7 @@ def index(hashtag):
     user=user,
     posts = posts)
 
-@application.route('/', methods=['GET','POST'])
+
 @application.route('/search', methods=['GET','POST'])
 def search():
     form = SearchForm()
@@ -56,7 +58,7 @@ def search_results(hashtag):
     form.displayStats = displayStats
     form.pos.choices = posTweets
     form.neg.choices = negTweets
-    return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = form)
+    return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = form, test = tweets)
 
     # if form.validate_on_submit():
     #     return render_template('search.html',title = 'Search', form = form)
@@ -64,10 +66,17 @@ def search_results(hashtag):
 
 @application.route('/like_minds', methods=['GET','POST'])
 def like_minds():
-    good_tweets = request.form.getlist('pos',       type=int)
+    tweet_ids = request.form.getlist('pos', type=int)
 
+    tweets = Tweet.query.filter(Tweet.twitter_id.in_(tweet_ids)).all()
 
+    print(tweets)
 
+    hashtags = []
+    locations = []
 
+    for tweet in tweets:
+        hashtags = hashtags + tweet.get_hashtags()
+        locations.append(tweet.location)
 
-    return render_template('like_minds.html', test = good_tweets)
+    return render_template('like_minds.html', test = hashtags, test2 = locations)

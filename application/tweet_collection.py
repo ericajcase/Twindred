@@ -34,13 +34,6 @@ class TweetCollection(object):
                 db.session().rollback()
                 unsaved += 1
 
-    # def find_tweets(self, ids)
-    #     good_tweets = Tweet.query.filter_by(twitter_id = tweetID)
-    #
-    #     good_hashtags = []
-    #     for tweetID in good_tweets:
-    #         good_hashtags +=
-
     def by_sentiment(self, polarity):
 
         pos = [tweet for tweet in self.tweetList if tweet.polarity > polarity]
@@ -56,8 +49,4 @@ class TweetCollection(object):
 
             "most_neg": list(Tweet.query.filter_by(search_term = self.hashtag).filter(Tweet.subjectivity > 0.5).order_by(Tweet.polarity).limit(10).all())
             }
-    def get_good_hashtags(ids):
-        good_hashtags = []
-        for tweetID in ids:
-            good_hashtags +=  Tweet.query.filter_by(twitter_id = tweetID)
-        return (good_hashtags)
+    
