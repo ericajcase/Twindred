@@ -28,6 +28,7 @@ def upgrade():
     sa.Column('date', sa.DateTime(), nullable=True),
     sa.Column('coordinates', Geography(geometry_type='POINT', srid=4326), nullable=True),
     sa.Column('location', sa.String(length=160), nullable=True),
+    sa.Column('user_name', sa.String)
     sa.Column('polarity', sa.Float),
     sa.Column('subjectivity', sa.Float),
     sa.PrimaryKeyConstraint('id'),

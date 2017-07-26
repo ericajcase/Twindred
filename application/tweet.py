@@ -30,7 +30,8 @@ class Tweet(db.Model):
         self.date = tweetData.created_at
         self.search_term = search_term
         self.coordinates = None
-        self.location = tweetData.text
+        self.location = tweetData.user.location
+        self.location = tweetData.user.name
 
         self.polarity = 0
         self.subjectivity = 0
