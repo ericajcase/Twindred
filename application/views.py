@@ -61,6 +61,7 @@ def search_results(hashtag = None ):
     form.displayStats = displayStats
     form.pos.choices = posTweets
     form.neg.choices = negTweets
+
     return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = form, test = tweets)
 
     # if form.validate_on_submit():

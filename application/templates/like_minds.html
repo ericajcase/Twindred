@@ -3,9 +3,10 @@
 
 {% block content %}
   <!-- <h2>Be sure to pick something you are passionate about</h2> -->
-<h1>Everything you wanted to know about {{hashtag}}</h1>
+<section id = "like_minds">
+<h1>All About {{hashtag}}</h1>
 
-<div>
+<div id = hashtags>
   <ul>
     {% for hashtag in hashtags %}
     <li>
@@ -18,7 +19,7 @@
   </ul>
 </div>
 
-<div>
+<div id = locations>
   <ul>
     {% for location in locations %}
     <li>
@@ -31,5 +32,5 @@
   <!-- <div id="vis"></div>
   <script type="text/javascript" src="{{
   url_for('static', filename='js/word-cloud.js')}}"></script> -->
-
+</section>
 {% endblock %}

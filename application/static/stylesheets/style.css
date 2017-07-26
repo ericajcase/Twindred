@@ -33,7 +33,7 @@ li{
 /********************************************************/
 /*SEARCH PAGE*/
 /*********************************************************/
-.search, #search_results{
+.search, #search_results, #like_minds{
   display: inline-block;
   background-color: #6acef6;
   /*background-color: grey;*/
@@ -50,6 +50,7 @@ li{
   font-size: 20px;
   font-weight: bold;
   width:60%;
+  overflow : auto;
   }
 
 .search, .search p {
@@ -70,8 +71,29 @@ li{
   /********************************************************/
   /*SEARCH RESULTS*/
   /*********************************************************/
-
-
 #search_results {
   margin-top: 45%;
+}
+
+#like_minds{
+  display:inline;
+}
+
+#hashtags{
+}
+
+header {
+  position: fixed;
+  top: 0px;
+  width: 90%;
+  height: 10%;
+  background-color: #29708e;
+  font-color: #eed213;
+  border-color: #eed213;
+  padding: 2rem 5%;
+  display: inline-block;
+  z-index: 1;
+  border-width: 5px;
+  border-style: solid;
+  font-size: 60px;
 }
