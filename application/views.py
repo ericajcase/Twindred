@@ -23,10 +23,12 @@ def search():
 def search_results(hashtag = None ):
     if hashtag == None:
         hashtag = request.form.get("hashtag")
+
     tweets = TweetCollection(hashtag)
     if len(tweets.tweetList)==0:
-         flash('Search yielded no results!  Try a different search')
-         return render_template('search.html',title = 'Search', form = form)
+        form = SearchForm()
+        flash('Search yielded no results!  Try a different search')
+        return render_template('search.html',title = 'Search', form = form)
 
     form = SimpleForm(request.form)
 
@@ -44,7 +46,7 @@ def search_results(hashtag = None ):
     form.pos.choices = posTweets
     form.neg.choices = negTweets
 
-    return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = SearchForm, test = tweets)
+    return render_template('search_results.html', displayStats=displayStats, title = 'Search Results', form = form, test = tweets)
 
 
 @application.route('/like_minds', methods=['GET','POST'])
@@ -57,8 +59,9 @@ def like_minds():
     tweets = (Tweet.query.filter(Tweet.twitter_id.in_(tweet_ids)).all())
 
     if len(tweets)==0:
+        form = SearchForm()
         flash('Search yielded no results!  Try a different search')
-        return render_template('search.html',title = 'Search', form = SearchForm)
+        return render_template('search.html',title = 'Search', form = form)
 
     hashtags = []
     locations = []
