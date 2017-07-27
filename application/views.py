@@ -26,9 +26,8 @@ def search_results(hashtag = None ):
 
     tweets = TweetCollection(hashtag)
     if len(tweets.tweetList)==0:
-        form = SearchForm()
         flash('Search yielded no results!  Try a different search')
-        return render_template('search.html',title = 'Search', form = form)
+        return render_template('search.html',title = 'Search', form = searchForm())
 
     form = SimpleForm(request.form)
 
@@ -61,7 +60,7 @@ def like_minds():
     if len(tweets)==0:
         form = SearchForm()
         flash('Search yielded no results!  Try a different search')
-        return render_template('search.html',title = 'Search', form = form)
+        return render_template('search.html',title = 'Search', form = SearchForm)
 
     hashtags = []
     locations = []
