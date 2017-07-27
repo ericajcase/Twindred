@@ -28,9 +28,7 @@ def search_results(hashtag = None ):
          flash('Search yielded no results!  Try a different search')
          return render_template('search.html',title = 'Search', form = form)
 
-
     form = SimpleForm(request.form)
-
 
     displayStats = {
         "hashtag": hashtag,
@@ -46,7 +44,7 @@ def search_results(hashtag = None ):
     form.pos.choices = posTweets
     form.neg.choices = negTweets
 
-    return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = form, test = tweets)
+    return render_template('search_results.html', displayStats=displayStats, title = 'Search', form = SearchForm, test = tweets)
 
 
 @application.route('/like_minds', methods=['GET','POST'])
@@ -60,7 +58,7 @@ def like_minds():
 
     if len(tweets)==0:
         flash('Search yielded no results!  Try a different search')
-        return render_template('search.html',title = 'Search', form = form)
+        return render_template('search.html',title = 'Search', form = SearchForm)
 
     hashtags = []
     locations = []
