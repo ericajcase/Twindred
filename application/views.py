@@ -59,7 +59,7 @@ def like_minds():
     tweets = (Tweet.query.filter(Tweet.twitter_id.in_(tweet_ids)).all())
 
     if len(tweets)==0:
-         flash('Search yielded no results!  Try a different search')
+        flash('Search yielded no results!  Try a different search')
         return render_template('search.html',title = 'Search', form = form)
 
     hashtags = []
