@@ -8,7 +8,7 @@ SQLALCHEMY_DATABASE_URI = "postgresql://localhost/Twindred"
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 if 'RDS_HOSTNAME'  in os.environ:
-    SQLALCHEMY_DATABASE_URI = os.environ['RDS_HOSTNAME']
+    SQLALCHEMY_DATABASE_URI = "postgresql://" + os.environ['RDS_HOSTNAME'] + "/" + os.environ['RDS_DB_NAME']
 else:
     SQLALCHEMY_DATABASE_URI = "postgresql://localhost/Twindred"
 
