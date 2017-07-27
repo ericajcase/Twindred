@@ -10,26 +10,6 @@ from .tweet import Tweet
 
 POSITIVE = .5
 
-@application.route('/index')
-
-def index(hashtag):
-    user = {'nickname': 'Miguel'}  # fake user
-    posts = [  # fake array of posts
-    {
-    'author': {'nickname': 'John'},
-    'body': 'Beautiful day in Portland!'
-    },
-    {
-    'author': {'nickname': 'Susan'},
-    'body': 'The Avengers movie was so cool!'
-    }
-    ]
-    return render_template('index.html',
-    title = "Erica's Flask",
-    user=user,
-    posts = posts)
-
-
 @application.route('/search', methods=['GET','POST'])
 def search():
     form = SearchForm()
@@ -71,6 +51,7 @@ def search_results(hashtag = None ):
 @application.route('/like_minds', methods=['GET','POST'])
 def like_minds():
     tweet_ids = request.form.getlist('pos', type=int)
+    tweet_ids = tweet_ids + (request.form.getlist('neg', type=int))
 
     form = AutoSearch(request.form)
 
