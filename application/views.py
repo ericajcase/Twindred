@@ -24,7 +24,7 @@ def search_results(hashtag = None ):
     if hashtag == None:
         hashtag = request.form.get("hashtag")
     tweets = TweetCollection(hashtag)
-    if len(tweets)==0:
+    if len(tweets.tweetList)==0:
          flash('Search yielded no results!  Try a different search')
          return render_template('search')
 
