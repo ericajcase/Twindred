@@ -25,6 +25,7 @@ def search_results(hashtag = None ):
         hashtag = request.form.get("hashtag")
 
     tweets = TweetCollection(hashtag)
+
     if len(tweets.tweetList)==0:
         flash('Search yielded no results!  Try a different search')
         return render_template('search.html',title = 'Search', form = SearchForm())
@@ -51,6 +52,7 @@ def search_results(hashtag = None ):
 @application.route('/like_minds', methods=['GET','POST'])
 def like_minds():
     tweet_ids = request.form.getlist('pos', type=int)
+
     tweet_ids = tweet_ids + (request.form.getlist('neg', type=int))
 
     form = AutoSearch(request.form)
@@ -58,7 +60,6 @@ def like_minds():
     tweets = (Tweet.query.filter(Tweet.twitter_id.in_(tweet_ids)).all())
 
     if len(tweets)==0:
-        form = SearchForm()
         flash('Search yielded no results!  Try a different search')
         return render_template('search.html',title = 'Search', form = SearchForm())
 

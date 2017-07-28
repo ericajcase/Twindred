@@ -67,4 +67,10 @@ class Tweet(db.Model):
         self.subjectivity = sentiment.subjectivity
 
     def get_hashtags(self):
-        return (re.findall("\S*#(?:\[[^\]]+\]|\S+)", self.text))
+        hashtags =  (re.findall("\S*#(?:\[[^\]]+\]|\S+)", self.text))
+
+        results = []
+        for hashtag in hashtags:
+            if hashtag != tests:
+                results.append(hashtag)
+        return results
