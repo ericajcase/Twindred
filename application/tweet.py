@@ -71,6 +71,6 @@ class Tweet(db.Model):
 
         results = []
         for hashtag in hashtags:
-            if hashtag != tests:
+            if hashtag != self.search_term:
                 results.append(hashtag)
         return results
